@@ -35,8 +35,8 @@ class model():
         self.image = tf.placeholder(tf.float32, [None, FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel])
         self.label = tf.placeholder(tf.float32, [None, self.num_classes])
         self.image = tf.image.resize_images(self.image, self.size, 0)
-        self.image = tf.subtract(image, 0.5)
-        self.image = tf.multiply(image, 2.0)
+        self.image = tf.subtract(self.image, 0.5)
+        self.image = tf.multiply(self.image, 2.0)
 
     def init_network(self):
         # bone network
