@@ -438,7 +438,7 @@ def load_model(saver, sess):
     print("[JH]use random init weights")
     return -1
 
-def main():
+def main(_):
     deploy_config = model_deploy.DeploymentConfig()
     with tf.device(deploy_config.variables_device()):
         global_step = slim.create_global_step()
