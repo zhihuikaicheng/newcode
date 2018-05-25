@@ -359,7 +359,7 @@ def train(images, labels, train_op, network):
 
     # multi-thread-read
     coord = tf.train.Coordinator()
-    threads = tf.train.start_queue_runners(coord=coord,sess=self.sess)
+    threads = tf.train.start_queue_runners(coord=coord,sess=sess)
 
     # init vars
     st_time = time.time()
