@@ -34,11 +34,11 @@ class model():
     def init_input(self):
         self.image = tf.placeholder(tf.float32, [None, FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel])
         self.label = tf.placeholder(tf.float32, [None, self.num_classes])
-        self.image = tf.image.resize_images(self.image, self.size, 0)
-        self.image = tf.subtract(self.image, 0.5)
-        self.image = tf.multiply(self.image, 2.0)
 
     def init_network(self):
+        image = tf.image.resize_images(self.image, self.size, 0)
+        image = tf.subtract(image, 0.5)
+        image = tf.multiply(image, 2.0)
         # bone network
         net, end_points = resnet_v1.resnet_v1_50(
             self.image,
