@@ -389,12 +389,12 @@ def train(images, labels, train_op, network):
         # run
         calc_ans = sess.run(calc_obj, feed_dict=feed)
 
-        acc_train.append(calc_ans[2])
-        loss_train.append(calc_ans[1])
+        train_acc.append(calc_ans[2])
+        train_loss.append(calc_ans[1])
 
         # print info
         if i % FLAGS.log_every_n_steps == 0:
-            print("[%d] loss_train: %.5f acc_train: %.5f"%(i, loss_train.avg(), acc_train.avg()/FLAGS.batch_size))
+            print("[%d] train_loss: %.5f train_acc: %.5f"%(i, train_loss.avg(), train_acc.avg()/FLAGS.batch_size))
             print("-------------------------------------------------------------------------")
 
         # save model and summary
