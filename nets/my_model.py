@@ -16,7 +16,7 @@ def LeakyRelu(x, leak=0.1):
     return f1 * x + f2 * tf.abs(x)
 
 class model():
-    def __init__(self, num_classes, size, scope, is_training, global_pool=True, spatial_squeeze=True, reuse=None):
+    def __init__(self, num_classes, size, scope, is_training, output_stride, global_pool=True, spatial_squeeze=True, reuse=None):
         self.num_classes = num_classes
         self.size = size
         self.scope = scope

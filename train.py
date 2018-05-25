@@ -438,7 +438,7 @@ def load_model(saver, sess):
     print("[JH]use random init weights")
     return -1
 
-def main():
+def main(_):
     tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
         deploy_config = model_deploy.DeploymentConfig()
