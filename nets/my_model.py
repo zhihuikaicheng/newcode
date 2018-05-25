@@ -31,7 +31,7 @@ class model():
                 self.init_network()
             self.init_loss()
 
-    def init_input(self)：
+    def init_input(self):
         self.image = tf.placeholder(tf.float32, [None, FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel])
         self.label = tf.placeholder(tf.float32, [None, self.num_classes])
         self.image = tf.image.resize_images(self.image, self.size, 0)
