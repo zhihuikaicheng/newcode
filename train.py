@@ -325,7 +325,7 @@ def init_network():
         FLAGS.num_classes-FLAGS.labels_offset,
         [FLAGS.scale_height, FLAGS.scale_width],
         is_training=True,
-        scope='resnet_v1_50',
+        scope='my_model',
         global_pool=True,
         output_stride=16,
         spatial_squeeze=False,
@@ -335,8 +335,8 @@ def init_network():
 
 def init_opt(optimizer, network):
     variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    variables_base = [var for var in variables if not var.name.startswith('resnet_v1_50/embedding')]
-    variables_classifier = [var for var in variables if var.name.startswith('resnet_v1_50/embedding')]
+    variables_base = [var for var in variables if not var.name.startswith('my_model/embedding')]
+    variables_classifier = [var for var in variables if var.name.startswith('my_model/embedding')]
     grad_base = tf.gradients(network.loss, variables_base)
     grad_classifier = tf.gradients(network.loss * 10, variables_classifier)
     bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
@@ -426,8 +426,8 @@ def load_model(saver, sess):
         variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
         d = {}
         for var in variables:
-            name = var.name.replace(':0', '')
-            if name.startswith('resnet_v1_50/resnet_v1_50/logits') or name.startswith('resnet_v1_50/embedding'):
+            name = var.name.replace('my_model/', '').replace(':0', '')
+            if name.startswith('resnet_v1_50/logits') or name.startswith('embedding'):
                 continue
             d[name] = var
         saver = tf.train.Saver(d)
