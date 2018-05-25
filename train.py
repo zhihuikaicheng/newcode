@@ -438,22 +438,24 @@ def load_model(saver, sess):
     print("[JH]use random init weights")
     return -1
 
-def main(_):
-    deploy_config = model_deploy.DeploymentConfig()
-    with tf.device(deploy_config.variables_device()):
-        global_step = slim.create_global_step()
+def main():
+    tf.logging.set_verbosity(tf.logging.INFO)
+    with tf.Graph().as_default():
+        deploy_config = model_deploy.DeploymentConfig()
+        with tf.device(deploy_config.variables_device()):
+            global_step = slim.create_global_step()
 
-    images, labels = init_batch()
+        images, labels = init_batch()
 
-    network = init_network()
+        network = init_network()
 
-    with tf.device(deploy_config.optimizer_device()):
-        learning_rate = _configure_learning_rate(5000, global_step) #5000 is a discarded para
-        optimizer = _configure_optimizer(learning_rate)
+        with tf.device(deploy_config.optimizer_device()):
+            learning_rate = _configure_learning_rate(5000, global_step) #5000 is a discarded para
+            optimizer = _configure_optimizer(learning_rate)
 
-    train_op = init_opt(optimizer, network)
+        train_op = init_opt(optimizer, network)
 
-    train(images, labels, train_op, network)
+        train(images, labels, train_op, network)
 
 
 if __name__ == '__main__':
