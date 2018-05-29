@@ -6,13 +6,13 @@ TRAIN_DIR=/world/data-gpu-94/sysu-reid/checkpoints/ResNet_v1_newcode
 # Where the dataset is saved to.
 DATASET_DIR=/home/zhangkaicheng/Market-1501
 # WHere the log is saved to
-LOG_DIR=/home/yuanziyi/log
+LOG_DIR=/home/zhangkaicheng/log
 # Wher the tfrecord file is save to
 PROBE_OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/query
 # Wher the tfrecord file is save to
 GALLERY_OUTPUT_DIR=/world/data-gpu-94/sysu-reid/zhangkaicheng/Market-1501-tfrecord/bounding_box_test
 
-python get_features_rpp.py \
+python get_features.py \
 --dataset_name=Market_1501 \
 --probe_dataset_dir=${PROBE_OUTPUT_DIR} \
 --gallery_dataset_dir=${GALLERY_OUTPUT_DIR} \
