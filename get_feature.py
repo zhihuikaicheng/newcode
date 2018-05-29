@@ -239,8 +239,6 @@ def get_feature(images, labels, cams, network, sess, test_set):
     saver = tf.train.Saver()
 
     # load model
-    init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
-    sess.run(init)
     last_step = load_model(saver, sess)
 
     # init vars
@@ -335,6 +333,9 @@ def main(_):
         sess_config.gpu_options.allow_growth = True
         sess = tf.Session(config=sess_config)
 
+        init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
+        sess.run(init)
+        
         # multi-thread-read
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord, sess=sess)
