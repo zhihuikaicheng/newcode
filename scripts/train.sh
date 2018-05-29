@@ -25,7 +25,7 @@ python train.py \
 --weight_decay=5e-4 \
 --scale_height=256 \
 --scale_width=128 \
---GPU_use=4
+--GPU_use=7
 
 python train.py \
 --learning_rate=0.001 \
@@ -34,7 +34,7 @@ python train.py \
 --dataset_split_name=train \
 --dataset_dir=${OUTPUT_DIR} \
 --batch_size=32 \
---max_number_of_steps=24000 \
+--max_number_of_steps=32000 \
 --checkpoint_dir=${TRAIN_DIR} \
 --pretrain_path=${PRETRAINED_CHECKPOINT_DIR}/resnet_v1_50.ckpt \
 --log_dir=${LOG_DIR} \
@@ -44,4 +44,4 @@ python train.py \
 --weight_decay=5e-4 \
 --scale_height=256 \
 --scale_width=128 \
---GPU_use=4
+--GPU_use=7

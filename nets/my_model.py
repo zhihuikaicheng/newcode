@@ -41,7 +41,7 @@ class model():
         image = tf.multiply(image, 2.0)
         # bone network
         net, end_points = resnet_v1.resnet_v1_50(
-            self.image,
+            image,
             is_training=self.is_training,
             global_pool=self.global_pool,
             output_stride=self.output_stride,
