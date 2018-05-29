@@ -266,7 +266,7 @@ def get_feature(images, labels, cams, network, sess, test_set):
         # run
         calc_ans = sess.run(calc_obj, feed_dict=feed)
 
-        img_features.append(np.squeeze(probe_calc_ans[0], axis=None))
+        img_features.append(np.squeeze(calc_ans[0], axis=None))
         img_labels.append(batch[1])
         img_cams.append(batch[2])
 
