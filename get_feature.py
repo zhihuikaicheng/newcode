@@ -337,7 +337,7 @@ def main(_):
 
         # multi-thread-read
         coord = tf.train.Coordinator()
-        threads = tf.train.start_queue_runners(coord=coord,sess=self.sess)
+        threads = tf.train.start_queue_runners(coord=coord, sess=sess)
 
         get_feature(probe_images, probe_labels, probe_cams, network, sess, test_set='probe')
         get_feature(gallery_images, gallery_labels, gallery_cams, network, sess, test_set='gallery')
