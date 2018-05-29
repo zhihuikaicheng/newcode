@@ -234,13 +234,7 @@ def init_network():
         )
     return network
 
-def get_feature(images, labels, cams, network, test_set):
-    # sess
-    sess_config = tf.ConfigProto()
-    sess_config.allow_soft_placement=True #allow cpu calc when gpu can't
-    sess_config.gpu_options.allow_growth = True
-    sess = tf.Session(config=sess_config)
-
+def get_feature(images, labels, cams, network, sess, test_set):
     # saver
     saver = tf.train.Saver()
 
@@ -335,8 +329,22 @@ def main(_):
 
         network = init_network()
 
-        get_feature(probe_images, probe_labels, probe_cams, network, test_set='probe')
-        get_feature(gallery_images, gallery_labels, gallery_cams, network, test_set='gallery')
+        # sess
+        sess_config = tf.ConfigProto()
+        sess_config.allow_soft_placement=True #allow cpu calc when gpu can't
+        sess_config.gpu_options.allow_growth = True
+        sess = tf.Session(config=sess_config)
+
+        # multi-thread-read
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(coord=coord,sess=self.sess)
+
+        get_feature(probe_images, probe_labels, probe_cams, network, sess, test_set='probe')
+        get_feature(gallery_images, gallery_labels, gallery_cams, network, sess, test_set='gallery')
+
+        # end
+        coord.request_stop()
+        coord.join(threads)
 
 if __name__ == '__main__':
     tf.app.run()
