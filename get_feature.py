@@ -235,12 +235,6 @@ def init_network():
     return network
 
 def get_feature(images, labels, cams, network, sess, test_set):
-    # saver
-    saver = tf.train.Saver()
-
-    # load model
-    last_step = load_model(saver, sess)
-
     # init vars
     img_features = []
     img_labels = []
@@ -335,11 +329,17 @@ def main(_):
 
         init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
         sess.run(init)
-        
+
         # multi-thread-read
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord, sess=sess)
 
+        # saver
+        saver = tf.train.Saver()
+
+        # load model
+        last_step = load_model(saver, sess)
+        
         get_feature(probe_images, probe_labels, probe_cams, network, sess, test_set='probe')
         get_feature(gallery_images, gallery_labels, gallery_cams, network, sess, test_set='gallery')
 
