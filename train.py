@@ -303,8 +303,8 @@ def init_batch():
         })
 
     img = tf.decode_raw(features['img'], tf.uint8)
-    # img_height = tf.cast(features['img_height'], tf.int32)
-    # img_width = tf.cast(features['img_width'], tf.int32)
+    img_height = tf.cast(features['img_height'], tf.int32)
+    img_width = tf.cast(features['img_width'], tf.int32)
     img = tf.reshape(img, tf.stack([FLAGS.origin_height, FLAGS.origin_width, FLAGS.origin_channel]))
     img = tf.image.convert_image_dtype(img, dtype=tf.float32)
     img = tf.image.random_flip_left_right(img)
@@ -335,6 +335,7 @@ def init_network():
 
 def init_opt(optimizer, network):
     variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    pdb.set_trace()
     variables_base = [var for var in variables if not var.name.startswith('my_model/embedding')]
     variables_classifier = [var for var in variables if var.name.startswith('my_model/embedding')]
     grad_base = tf.gradients(network.loss, variables_base)
