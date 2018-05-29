@@ -335,7 +335,6 @@ def init_network():
 
 def init_opt(optimizer, network):
     variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    pdb.set_trace()
     variables_base = [var for var in variables if not var.name.startswith('my_model/embedding')]
     variables_classifier = [var for var in variables if var.name.startswith('my_model/embedding')]
     grad_base = tf.gradients(network.loss, variables_base)

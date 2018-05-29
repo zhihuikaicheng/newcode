@@ -51,6 +51,8 @@ class model():
             scope='resnet_v1_50'
             )
 
+        self.feature = end_points['global_pool']
+        
         # embedding
         with tf.variable_scope('embedding'):
             net = end_points['global_pool']
