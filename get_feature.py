@@ -339,12 +339,12 @@ def main(_):
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord,sess=sess)
 
-        get_feature(probe_images, probe_labels, probe_cams network, test_set='probe')
+        get_feature(probe_images, probe_labels, probe_cams, network, test_set='probe')
         get_feature(gallery_images, gallery_labels, gallery_cams, network, test_set='gallery')
 
         # end
         coord.request_stop()
         coord.join(threads)
-        
+
 if __name__ == '__main__':
     tf.app.run()
