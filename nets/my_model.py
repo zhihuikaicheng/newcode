@@ -69,7 +69,7 @@ class model():
         self.end_points = end_points
 
     def init_loss(self):
-        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.end_points['prediction'] + FLAGS.opt_epsilon), axis=1)
+        cross_entropy = -tf.reduce_sum(self.label*tf.log(self.end_points['predictions'] + FLAGS.opt_epsilon), axis=1)
         cross_entropy = tf.reduce_mean(cross_entropy)
 
         regular_vars = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
@@ -78,5 +78,5 @@ class model():
         self.loss = cross_entropy + FLAGS.weight_decay * regularizers
 
         # calc acc
-        corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.end_points['prediction'],1))
+        corr_pred = tf.equal(tf.argmax(self.label,1), tf.argmax(self.end_points['predictions'],1))
         self.acc = tf.reduce_sum(tf.cast(corr_pred, tf.int32))
