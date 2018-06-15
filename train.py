@@ -328,19 +328,21 @@ def init_network():
         scope='my_model',
         global_pool=True,
         output_stride=16,
-        spatial_squeeze=False,
+        spatial_squeeze=True,
         reuse=None
         )
     return network
 
 def init_opt(optimizer, network):
     variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    variables_base = [var for var in variables if not var.name.startswith('my_model/embedding')]
-    variables_classifier = [var for var in variables if var.name.startswith('my_model/embedding')]
-    grad_base = tf.gradients(network.loss, variables_base)
-    grad_classifier = tf.gradients(network.loss * 10, variables_classifier)
+    # variables_base = [var for var in variables if not var.name.startswith('my_model/embedding')]
+    # variables_classifier = [var for var in variables if var.name.startswith('my_model/embedding')]
+    # grad_base = tf.gradients(network.loss, variables_base)
+    # grad_classifier = tf.gradients(network.loss * 10, variables_classifier)
+    grad = tf.gradients(network.loss, variables)
     bn_op = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    train_op = [optimizer.apply_gradients(zip(grad_base,variables_base))] + [optimizer.apply_gradients(zip(grad_classifier,variables_classifier))] + bn_op
+    # train_op = [optimizer.apply_gradients(zip(grad_base,variables_base))] + [optimizer.apply_gradients(zip(grad_classifier,variables_classifier))] + bn_op
+    train_op = [optimizer.apply_gradients(zip(grad,variables))] +bn_op
     return train_op
 
 def train(images, labels, train_op, network):

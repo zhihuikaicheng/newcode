@@ -46,7 +46,7 @@ class model():
             global_pool=self.global_pool,
             output_stride=self.output_stride,
             spatial_squeeze=self.spatial_squeeze,
-            num_classes=None,
+            num_classes=self.num_classes,
             reuse=self.reuse,
             scope='resnet_v1_50'
             )
@@ -54,18 +54,18 @@ class model():
         self.feature = end_points['global_pool']
         
         # embedding
-        with tf.variable_scope('embedding'):
-            net = end_points['global_pool']
-            net = slim.flatten(net)
-            net = slim.fully_connected(net, 512, activation_fn=None)
-            net = slim.batch_norm(net, activation_fn=None)
-            net = LeakyRelu(net, leak=0.1)
-            net = slim.dropout(net, 0.5)
-            net = slim.fully_connected(net, self.num_classes, activation_fn=None, scope='logits')
+        # with tf.variable_scope('embedding'):
+        #     net = end_points['global_pool']
+        #     net = slim.flatten(net)
+        #     net = slim.fully_connected(net, 512, activation_fn=None)
+        #     net = slim.batch_norm(net, activation_fn=None)
+        #     net = LeakyRelu(net, leak=0.1)
+        #     net = slim.dropout(net, 0.5)
+        #     net = slim.fully_connected(net, self.num_classes, activation_fn=None, scope='logits')
 
-        pred = slim.softmax(net)
-        end_points['logits'] = net
-        end_points['prediction'] = pred
+        # pred = slim.softmax(net)
+        # end_points['logits'] = net
+        # end_points['prediction'] = pred
         self.end_points = end_points
 
     def init_loss(self):
